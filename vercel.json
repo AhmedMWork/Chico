@@ -1,5 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm run build:vercel",
+  "buildCommand": "node scripts/check-env.mjs && pnpm run build:vercel",
   "installCommand": "pnpm install --frozen-lockfile"
 }
