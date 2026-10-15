@@ -1,0 +1,2 @@
+'use client';
+export default function DashboardError({reset}:{error:Error&{digest?:string};reset:()=>void}){return <main id="main" className="auth-page"><section className="auth-card pending-card"><div className="eyebrow">Chico Admins</div><h1>تعذر إكمال العرض</h1><p>بياناتك لا تتغير بسبب هذا الخطأ. أعد المحاولة لتحميل آخر حالة محفوظة.</p><button className="button gold" onClick={reset}>إعادة المحاولة</button></section></main>;}

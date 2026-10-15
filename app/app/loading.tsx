@@ -1,0 +1,1 @@
+export default function DashboardLoading(){return <main id="main" className="auth-page" aria-busy="true"><section className="auth-card pending-card"><div className="eyebrow">Chico Admins</div><h1>جاري التحميل</h1><p role="status">لحظات…</p><div className="loading-line"/></section></main>;}
