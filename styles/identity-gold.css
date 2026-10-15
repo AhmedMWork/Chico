@@ -1,0 +1,495 @@
+/* CHICO ME / black and metallic gold identity, reference revision 02. */
+:root {
+  --bg:#07090b;
+  --panel:#0e1113;
+  --panel-alt:#171819;
+  --panel-hover:#211c14;
+  --sidebar:#090b0d;
+  --text:#f4f0e7;
+  --muted:#b6b3aa;
+  --faint:#98988f;
+  --line:#493c29;
+  --soft-line:#2c2820;
+  --gold:#e7bf6c;
+  --gold-rgb:231,191,108;
+  --gold-soft:#302514;
+  --green:#9fd5a8;
+  --green-soft:#172d20;
+  --red:#f09587;
+  --red-soft:#3c151a;
+  --amber:#edc47c;
+  --amber-soft:#37250e;
+  --blue:#b3c6d2;
+  --blue-soft:#1b2831;
+  --radius:4px;
+  --frame:#85632d;
+  --frame-bright:#ddb767;
+  --frame-dim:#4e3c22;
+  --surface:linear-gradient(155deg,#ffffff04 0%,transparent 32%),linear-gradient(180deg,#111416,#090c0e);
+  --metal-gold:linear-gradient(125deg,#8b5a1c 0%,#d2a34d 17%,#fff0b5 37%,#bd842e 59%,#ecc56e 83%,#95611c 100%);
+  --metal-text:linear-gradient(180deg,#fff3c4 5%,#ecca7f 42%,#b27a29 67%,#f4d692 93%);
+  --shadow:inset 0 1px 0 #fce5ab12,inset 0 -1px 0 #0008,0 8px 22px #0004;
+}
+body {
+  background-image:radial-gradient(ellipse at 4% 0%,#7e4b131b,transparent 42%),radial-gradient(ellipse at 98% 65%,#6324110b,transparent 35%);
+  background-attachment:fixed;
+}
+button,input,select {font-variant-numeric:tabular-nums}
+.workspace{position:relative}
+.topbar {
+  height:58px;
+  border-bottom-color:#78592b;
+  background:linear-gradient(180deg,#161719,#080b0d);
+  box-shadow:0 1px 0 #d8b06316;
+  color:#e5d8bd;
+}
+.topbar .breadcrumb>span,.topbar .preview-label{color:#b9af9b}
+.topbar .breadcrumb>span[dir=ltr]{color:#e4c78a;letter-spacing:2px}
+.topbar .breadcrumb b,.topbar .top-divider{color:#7e5b28}
+.topbar .top-divider{background:#5a4528}
+.topbar .icon-button{color:#c8b794}
+.topbar .icon-button:hover{background:#2c2318;border-color:#8e682e;color:#f6d892}
+.topbar .role-pill{background:linear-gradient(135deg,#221c14,#0b0d0e);border-color:#796036;border-radius:3px;color:#ead8b2}
+.topbar .role-pill .icon{color:#d7ad5c}
+.topbar .preview-label i,.notification-button i{background:#efc570;box-shadow:0 0 8px #e9b65455}
+.topbar .menu-button{color:#e7c77c}
+.main{padding-top:24px}
+.sidebar {
+  border-inline-end:1px solid var(--frame);
+  background:linear-gradient(165deg,rgba(var(--gold-rgb),.035),transparent 25%),var(--sidebar);
+  padding-top:28px;
+}
+.sidebar:before {
+  content:'';
+  pointer-events:none;
+  position:absolute;
+  inset:0 0 auto 0;
+  height:125px;
+  background:linear-gradient(140deg,transparent 64%,#a879291c 64.4%,transparent 65%),linear-gradient(140deg,transparent 71%,#d6ac4c33 71.4%,transparent 72%),linear-gradient(140deg,transparent 76%,#a879291c 76.4%,transparent 77%);
+}
+.brand{position:relative;padding-bottom:29px;gap:12px}
+.brand img{width:47px;height:44px;filter:drop-shadow(0 0 10px #9c221e38)}
+.brand strong {
+  background:var(--metal-text);
+  color:#ecc676;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 1px 1px #0007);
+  letter-spacing:1px;
+}
+.brand strong span{-webkit-text-fill-color:var(--muted);letter-spacing:1.4px;font-size:12px}
+.brand small{font-size:9px;letter-spacing:0}
+.sidebar-section-label{color:var(--gold);opacity:.7;font-size:9px}
+.side-nav{gap:5px}
+.nav-item{border-radius:3px;border-color:transparent;min-height:45px}
+.nav-item .icon{color:var(--muted);stroke-width:1.7}
+.nav-item:hover{background:linear-gradient(90deg,rgba(var(--gold-rgb),.025),rgba(var(--gold-rgb),.09));border-color:var(--frame-dim)}
+.nav-item.active {
+  color:#f6dfac;
+  border:1px solid #c89642;
+  background:linear-gradient(100deg,#280b0f 0%,#651a22 85%,#782a27);
+  box-shadow:inset 0 0 16px #d45d2716,0 0 11px #bf78341b;
+}
+.nav-item.active .icon{color:#ffe4a5;filter:drop-shadow(0 1px 2px #000a)}
+.active-marker{background:var(--metal-gold);height:11px;width:11px;transform:rotate(45deg);inset-inline-end:-6px;top:16px;box-shadow:0 0 12px #edb85080;border-radius:0}
+.server-mark{border-color:var(--frame-dim)}
+.server-mark img{width:44px;height:44px;border-radius:3px;border:1px solid #90703566}
+.server-mark strong{color:var(--gold)}
+.server-dot{box-shadow:0 0 7px rgba(var(--gold-rgb),.5)}
+.account-icon{border-color:var(--frame);border-radius:3px;background:linear-gradient(145deg,rgba(var(--gold-rgb),.1),transparent)}
+.account-button{border-radius:3px}
+.account-button strong{color:var(--text)}
+.command-masthead {
+  position:relative;
+  isolation:isolate;
+  min-height:148px;
+  padding:22px 28px;
+  margin-bottom:20px;
+  overflow:hidden;
+  border:1px solid #b18b47;
+  border-radius:2px;
+  background:linear-gradient(270deg,#07090bf5 0%,#080a0bd9 28%,#0a0a0b36 61%,#090a0d86 100%),url('/assets/chico-city-gold.webp') center 57% / cover;
+  box-shadow:inset 0 0 0 4px #0a0b0e70,inset 0 0 0 5px #ddb05c2b,0 5px 26px #0004;
+  clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
+}
+.command-masthead:before,.command-masthead:after {
+  content:'';
+  position:absolute;
+  height:1px;
+  width:26px;
+  background:#eed18c;
+  z-index:4;
+  pointer-events:none;
+  transform:rotate(45deg);
+}
+.command-masthead:before{right:-4px;top:8px}
+.command-masthead:after{left:-4px;bottom:8px}
+.command-masthead>.heading-copy{position:relative;z-index:2}
+.command-masthead .eyebrow{display:flex;align-items:center;gap:9px;color:#ddba72;font-size:8px;letter-spacing:1.7px;margin-bottom:3px}
+.command-masthead .eyebrow>.icon{width:22px;height:22px;fill:#a0772630;filter:drop-shadow(0 1px 1px #0008)}
+.command-masthead .eyebrow b{margin:0 5px;font-weight:400;color:#80602e}
+.command-masthead h1 {
+  font-size:31px;
+  line-height:1.65;
+  background:var(--metal-text);
+  color:#f5d48b;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 2px #000c);
+  letter-spacing:-.7px;
+  width:fit-content;
+}
+.command-masthead .heading-period{color:#cd9a3c}
+.command-masthead p{color:#d2c8b5;font-size:11px;text-shadow:0 1px 3px #000}
+.masthead-angles {
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(133deg,transparent 8%,#e9c47c2e 8.1%,transparent 8.3%),linear-gradient(133deg,transparent 9.8%,#a0712460 10%,transparent 10.1%),linear-gradient(133deg,transparent 11.3%,#ffd36a25 11.6%,transparent 12.2%),linear-gradient(133deg,transparent 82%,#edc06636 82.1%,transparent 82.3%),linear-gradient(133deg,transparent 85%,#ffcb5f25 85.1%,transparent 85.3%);
+}
+.masthead-flare {
+  position:absolute;
+  width:240px;
+  height:1px;
+  top:0;
+  left:17%;
+  background:linear-gradient(90deg,transparent,#ffe3a7 50%,transparent);
+  box-shadow:0 0 10px #eab25a,0 0 24px #edb45c99;
+  pointer-events:none;
+}
+.command-masthead .view-switch {
+  position:relative;
+  z-index:2;
+  background:#080a0deb;
+  border:1px solid #ba8f48;
+  border-radius:3px;
+  box-shadow:0 4px 20px #0007,inset 0 1px 0 #e8cc9630;
+  padding:4px;
+}
+.command-masthead .view-switch button{color:#d9c7a6;border-radius:2px;font-size:11px;gap:9px;min-height:38px}
+.command-masthead .view-switch button.selected {
+  color:#ffe7ac;
+  background:linear-gradient(115deg,#431419,#7a2429);
+  box-shadow:inset 0 0 0 1px #dbad5680,inset 0 1px 0 #f4c87655;
+}
+.command-masthead .view-switch button:not(.selected):hover{color:#fff0c6;background:#3c2c1855}
+.command-masthead>.badge{position:relative;z-index:2;background:#1d1710eb;color:#f0cf8c;border:1px solid #8c642f}
+.period-picker,.select-wrap{border-color:var(--frame-dim);border-radius:3px;background:var(--surface);box-shadow:inset 0 1px 0 #e5bd6712}
+.period-picker:hover{border-color:var(--gold)}
+.period-picker>.icon,.select-wrap>.icon{color:var(--gold)}
+.period-group>.badge{border:1px solid var(--soft-line)}
+.card {
+  position:relative;
+  border:1px solid var(--frame);
+  background:var(--surface);
+  border-radius:3px;
+  box-shadow:var(--shadow);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.card:before,.card:after {
+  content:'';
+  height:1px;
+  width:19px;
+  position:absolute;
+  pointer-events:none;
+  z-index:3;
+  background:var(--frame-bright);
+  transform:rotate(45deg);
+}
+.card:before{right:-3px;top:5px}
+.card:after{left:-3px;bottom:5px}
+.card:hover{border-color:var(--frame-bright)}
+.hero {
+  border-color:#c59a4e;
+  background:linear-gradient(270deg,#090c0ef7 0%,#090c0eeb 40%,#080b0dbb 100%),url('/assets/chico-city-gold.webp') center 60% / cover;
+  box-shadow:inset 0 1px 0 #fbe4ae38,inset 0 -18px 32px #0005;
+}
+.hero h2{color:#f3e4c7;text-shadow:0 1px 3px #0007;font-weight:700}
+.hero p{color:#c5bbab}
+.hero-eyebrow>span[dir=ltr]{color:#e1c68b}
+.hero .inline-role{color:#baa682;border-color:#6b532d}
+.hero-footer{border-color:#5d45266b;color:#bdb09a}
+.hero-footer b,.hero-footer .icon{color:#f0c773}
+.hero-lines{border-radius:0;opacity:.18;transform:rotate(40deg);height:540px;width:350px;top:-160px;inset-inline-end:-120px}
+.hero-lines div{border-radius:0;border-color:#d6ab56;box-shadow:0 0 25px #b17a2430}
+.hero-lines div:nth-child(2){inset:15px;box-shadow:inset 0 0 8px #a7742415}
+.hero-lines div:nth-child(3){inset:32px;border-style:solid;opacity:.4}
+.hero .badge.success{background:#173019b0;color:#bddba7;border:1px solid #65865455}
+.ring-wrap{isolation:isolate}
+.ring-wrap:before {
+  content:'';
+  position:absolute;
+  inset:-5px;
+  border:1px solid #a87c314a;
+  border-radius:50%;
+  box-shadow:inset 0 0 22px #d8a1440b,0 0 22px #d8a14409;
+  background:repeating-conic-gradient(from -1deg,#b4915245 0deg 1deg,transparent 1deg 15deg);
+  -webkit-mask:radial-gradient(circle,transparent 66%,#000 67%);
+  mask:radial-gradient(circle,transparent 66%,#000 67%);
+  z-index:-1;
+}
+.progress-ring .ring-track{stroke:#45361f;stroke-width:7}
+.progress-ring .ring-value{stroke:url(#ticketGold);stroke-width:7;filter:drop-shadow(0 0 5px #e8bd5b45)}
+.ring-label strong{color:#fff0d0;text-shadow:0 2px 6px #000b}
+.ring-label strong span{color:#d4ad63}
+.ring-label small{color:#c2af8c}
+.ring-caption b{color:#edcf91}
+.ring-caption b span,.ring-caption>span{color:#9e957f}
+.hero-progress>p{color:#d9bc80}
+.leadership-emblem{border-color:#b78c3d;background:radial-gradient(circle,#e6b64e12,transparent 65%);box-shadow:0 0 25px #d6a44a15,inset 0 0 30px #b88b3415}
+.leadership-emblem .icon{color:#edca7c;filter:drop-shadow(0 2px 3px #0008)}
+.shift-highlight {
+  border-radius:3px;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  border:1px solid var(--frame);
+}
+[data-theme=dark] .shift-highlight {
+  background:linear-gradient(270deg,#10100ee8,#100e0dcc),url('/assets/chico-city-gold.webp') 30% 55% / cover;
+  color:#e5c78b;
+  box-shadow:inset 0 0 0 4px #080a0c38,inset 0 0 0 5px #d6b16b16;
+}
+.shift-highlight:before{width:19px;height:1px;right:-3px;left:auto;top:5px;border:0;border-radius:0;transform:rotate(45deg);background:var(--frame-bright)}
+.shift-highlight:after{content:'';position:absolute;width:19px;height:1px;left:-3px;bottom:5px;transform:rotate(45deg);background:var(--frame-bright)}
+[data-theme=dark] .shift-stamp{color:#d0a559;letter-spacing:2.4px}
+[data-theme=dark] .shift-top{color:#f0d69c}
+[data-theme=dark] .shift-top .icon{color:#e4be70}
+[data-theme=dark] .shift-date{color:#c6baa0}
+[data-theme=dark] .shift-time{color:#f6dc9d;text-shadow:0 2px 4px #0008}
+[data-theme=dark] .shift-time span{color:#92733e}
+[data-theme=dark] .shift-highlight>p{color:#b2a386}
+[data-theme=dark] .shift-days>span{color:#9e937c;border-radius:3px}
+[data-theme=dark] .shift-days b{color:#dfd1b2}
+[data-theme=dark] .shift-days .today{border-color:#9f7736;background:#1c1811}
+[data-theme=dark] .shift-days .next{background:var(--metal-gold);color:#2a1b09;border:1px solid #f7d99a;box-shadow:0 0 9px #e1a34020}
+[data-theme=dark] .shift-days .next b{color:#241b0c;font-weight:700}
+[data-theme=dark] .shift-link{color:#ebc77f;border-color:#86642e75}
+.metric{padding-block:18px 16px;background:linear-gradient(120deg,rgba(var(--gold-rgb),.045),transparent 65%),var(--surface)}
+.metric-top{color:var(--muted)}
+.metric-icon{width:32px;height:32px;color:var(--gold);border-radius:3px;background:linear-gradient(145deg,rgba(var(--gold-rgb),.12),transparent);border:1px solid rgba(var(--gold-rgb),.13)}
+.metric-icon .icon{width:20px;height:20px;filter:drop-shadow(0 1px 1px #0009)}
+.metric-icon.blue,.metric-icon.neutral{color:var(--gold)}
+.metric-icon.success{color:var(--green);background:linear-gradient(145deg,#83be9220,transparent);border-color:#7bad8840}
+.metric-icon.warning{color:var(--amber);background:linear-gradient(145deg,#e0b85a22,transparent);border-color:#b4863540}
+.metric-icon.danger{color:var(--red);background:linear-gradient(145deg,#e03e4220,transparent);border-color:#b7474740}
+.metric-warning{border-color:#bd8b39;background:radial-gradient(ellipse at top right,#9b4f1018,transparent 75%),var(--surface)}
+.metric-danger{border-color:#be594b;background:radial-gradient(ellipse at top right,#95141c33,transparent 75%),var(--surface)}
+.metric-value>span{font-weight:500;color:var(--text);text-shadow:0 2px 3px #0003;letter-spacing:-.5px}
+.metric-value>small{color:var(--muted)}
+.meter{background:rgba(var(--gold-rgb),.12);height:4px;border-radius:1px;box-shadow:inset 0 1px 1px #0005}
+.meter i,.meter.gold i{background:var(--metal-gold);border-radius:1px;box-shadow:0 0 7px #e3ae4f30}
+.meter.blue i{background:linear-gradient(90deg,#8d713e,#e5bf77)}
+.meter.success i{background:linear-gradient(90deg,#4b8758,#bdd99b)}
+.metric-note.warning{color:var(--amber)}
+.section-heading{position:relative}
+.section-heading h2{color:var(--gold);font-weight:700;text-shadow:0 1px 1px #0003}
+.section-heading .eyebrow{color:var(--faint)}
+.section-heading>.icon{color:var(--gold);filter:drop-shadow(0 1px 1px #0007)}
+.panel-bottom{border-top-color:var(--frame-dim);background:linear-gradient(180deg,rgba(var(--gold-rgb),.018),transparent)}
+.text-button{color:var(--gold)}
+.button{border-radius:3px}
+.button.gold {
+  background:var(--metal-gold);
+  border-color:#e3bd70;
+  color:#241a0a;
+  box-shadow:inset 0 1px 0 #fff2c3a0,inset 0 -1px 0 #735120,0 2px 10px #c1842e15;
+  text-shadow:0 1px 0 #fff0bf45;
+}
+.button.gold:hover:not(:disabled){filter:brightness(1.11);box-shadow:inset 0 1px 0 #ffefb9,0 0 13px #c1842e40}
+.button.outline{border-color:var(--frame);background:linear-gradient(135deg,rgba(var(--gold-rgb),.055),transparent);color:var(--gold)}
+.button.outline:hover{border-color:var(--frame-bright);background:rgba(var(--gold-rgb),.09)}
+.button.small{border-radius:3px}
+.icon-button{border-radius:3px}
+.badge{border-radius:3px;box-shadow:inset 0 1px 0 #ffffff04}
+.badge.success{border:1px solid #6c987144;color:var(--green)}
+.badge.warning{border:1px solid #bb8b3b55}
+.badge.danger{border:1px solid #b84f4e55;color:var(--red)}
+.badge.gold{border:1px solid #a5803c55}
+.badge-dot{box-shadow:0 0 5px currentColor}
+.mini-tabs{background:var(--bg);border-color:var(--frame-dim);border-radius:3px}
+.mini-tabs button{border-radius:2px}
+.mini-tabs .selected{background:var(--gold-soft);color:var(--gold);box-shadow:inset 0 0 0 1px rgba(var(--gold-rgb),.22)}
+.chart-topline>strong{color:var(--text)}
+.chart-grid span:after{border-color:rgba(var(--gold-rgb),.12)}
+.bar {
+  background:linear-gradient(90deg,#97641f,#deb257 30%,#f1c86a 52%,#bc872e 100%);
+  border:1px solid #d0a24e;
+  border-bottom:0;
+  border-radius:1px 1px 0 0;
+  box-shadow:inset 0 1px 0 #ffe6a5b0,0 -2px 14px #e3ab3910;
+}
+.bar.highlighted{background:linear-gradient(90deg,#a97427,#f5d284 30%,#fff0b7 52%,#d4a34c 100%);border-color:#ffe1a1;box-shadow:inset 0 1px 0 #fff5cd,0 0 12px #e3ab392b}
+.bar>span{color:var(--gold);font-weight:700}
+.future-bar{border:1px solid var(--frame-dim);background:transparent;border-radius:1px;height:4px}
+.bar-day{color:var(--muted)}
+.chart-key i{background:var(--gold);box-shadow:0 0 6px rgba(var(--gold-rgb),.4)}
+.task-icon,.meeting-icon{border-radius:3px;border-color:var(--frame);background:linear-gradient(135deg,rgba(var(--gold-rgb),.1),transparent)}
+.task-icon.done{border-color:#668c5966}
+.balance-heading{border-color:var(--frame-dim)}
+.balances strong{color:var(--gold)}
+.balances>div+div{border-color:var(--frame-dim)}
+.balance-footnote{color:var(--muted)}
+.meeting-strip {
+  border:1px solid var(--frame);
+  border-radius:3px;
+  background:linear-gradient(270deg,var(--panel) 38%,transparent),linear-gradient(90deg,#8b5e1610,transparent),var(--panel);
+  box-shadow:inset 0 1px 0 #d4aa5014;
+}
+.meeting-strip h3{color:var(--gold)}
+.meeting-icon{width:40px;height:40px}
+.meeting-strip>.text-button{color:var(--gold)}
+.page-footer{color:var(--faint)}
+.page-footer>span[dir=ltr]{color:var(--gold);opacity:.65}
+.decision-row{border-color:var(--soft-line)}
+.decision-icon{border-radius:3px;background:linear-gradient(145deg,#71501b33,#241b0d);border:1px solid #b0883c66;color:var(--gold)}
+.decision-icon.gold{box-shadow:inset 0 1px 0 #f9ce7b24}
+.decision-icon.success{background:var(--green-soft);border-color:#6a986a66}
+.decision-icon.warning{background:var(--amber-soft);border-color:#a7783566}
+.decision-icon.danger{background:linear-gradient(145deg,#5a151d,#260d11);border-color:#b9504e77;color:#f28e83;box-shadow:inset 0 1px 0 #f3716f22}
+.decision-icon .icon{filter:drop-shadow(0 1px 1px #0008)}
+.decision-copy strong{color:var(--text)}
+.decision-copy small{color:var(--muted)}
+.data-progress>span{color:var(--gold)}
+.segmented-meter i{background:rgba(var(--gold-rgb),.1);border:1px solid rgba(var(--gold-rgb),.1);border-radius:1px}
+.segmented-meter i.filled{background:linear-gradient(180deg,#ffe3a1,#c5923b);border-color:#cda350;opacity:1;box-shadow:0 0 7px #dba54012}
+.data-legend .filled{background:var(--gold)}
+.data-quality-panel>p{color:var(--muted)}
+.performance-summary{border-bottom:1px solid var(--frame-dim);background:linear-gradient(90deg,rgba(var(--gold-rgb),.02),transparent 65%)}
+.performance-summary strong{color:var(--text);text-shadow:0 1px 2px #0004}
+.team-progress>div:first-child{color:var(--muted)}
+.team-progress b{color:var(--gold)}
+.performance-table th {
+  background:linear-gradient(180deg,#35121a,#210c13);
+  color:#e2c892;
+  border-top:1px solid #9a753d;
+  border-bottom:1px solid #947039;
+  font-weight:700;
+}
+.performance-table td{border-color:var(--frame-dim)}
+.performance-table tbody tr:nth-child(2){background:rgba(var(--gold-rgb),.016)}
+.rank-label{color:var(--text)}
+.rank-symbol{background:linear-gradient(145deg,#806024,#e0b25a);color:#261b09;box-shadow:inset 0 1px 0 #ffe7aa}
+.rank-symbol.rank-1{background:linear-gradient(145deg,#8b7350,#ead9b7);color:#342410}
+.rank-symbol.rank-2{background:linear-gradient(145deg,#585c58,#adb5aa);color:#18241b}
+.mini-meter{background:rgba(var(--gold-rgb),.12);border-radius:1px}
+.mini-meter i{background:var(--metal-gold);border-radius:1px}
+.subtle-count{border-radius:3px;border-color:var(--frame);color:var(--gold);background:var(--gold-soft)}
+.request-preview-icon{color:var(--gold)}
+.coverage-slot i{border-radius:2px;background:linear-gradient(180deg,#577247,#344f30);border-color:#74935c66;box-shadow:inset 0 1px 0 #c7dfb014}
+.coverage-slot.gap i{background:repeating-linear-gradient(130deg,#30200c,#30200c 5px,#4b331413 5px,#4b331413 10px);border-color:var(--amber)}
+.coverage-legend i.covered{background:#688c56}
+.requests-panel>.text-button{border-top:1px solid var(--frame-dim);padding-top:12px;margin-top:3px}
+.detail-dialog{border:1px solid var(--frame);border-radius:4px;background:var(--surface);box-shadow:0 25px 100px #000c,inset 0 1px 0 rgba(var(--gold-rgb),.25)}
+.detail-dialog::backdrop{background:#030405d9;backdrop-filter:blur(7px)}
+.dialog-header{border-bottom-color:var(--frame);background:linear-gradient(140deg,rgba(var(--gold-rgb),.07),transparent),var(--panel)}
+.dialog-header h2{color:var(--gold)}
+.dialog-header .eyebrow{color:var(--muted)}
+.notice,.my-shift,.meeting-date-block,.checkbox-row,.training-steps>div{border-radius:3px}
+.notice.gold{border:1px solid rgba(var(--gold-rgb),.25)}
+.dialog-stat-grid>div{border-radius:3px;border-color:var(--frame-dim)}
+.dialog-stat-grid strong{color:var(--gold)}
+.dialog-body select,.dialog-body input:not([type=checkbox]){border-radius:3px;border-color:var(--frame-dim)}
+.dialog-body input:focus,.dialog-body select:focus{border-color:var(--gold)}
+.permission-list>div{border-color:var(--frame-dim)}
+.permission-list>div>.icon{color:var(--gold)}
+.theme-choices button,.theme-preview{border-radius:3px}
+.theme-choices button.selected{box-shadow:inset 0 0 0 1px rgba(var(--gold-rgb),.15)}
+.dark-preview{background:linear-gradient(135deg,#07090b,#17120c)}
+.dark-preview:before{background:linear-gradient(130deg,#26131b,#0b0c0e);border-color:#d2a64f}
+.dark-preview:after{border-color:#d2a64f;background:linear-gradient(145deg,#120d0c,#07090b)}
+.light-preview{background:linear-gradient(135deg,#faf4e5,#ded0ae)}
+.light-preview:before{background:#fff7e6;border-color:#a17835}
+.period-options>button{border-radius:3px;border-color:var(--frame-dim)}
+.period-options>button.selected{border-color:var(--gold)}
+.confirm-illustration{border-radius:5px;border:1px solid var(--frame);background:linear-gradient(140deg,rgba(var(--gold-rgb),.15),transparent)}
+.toast{border-radius:4px;border:1px solid #e2bd76;background:linear-gradient(110deg,#272016,#0c0e10);color:#f0dcae;box-shadow:0 10px 40px #0008}
+.mobile-nav{background:linear-gradient(180deg,#121316,#06090c);border-color:#ad833f;box-shadow:0 -3px 18px #0006}
+.mobile-nav>button{border-radius:3px;color:#a89f8d}
+.mobile-nav>button.active{color:#f2d99e;background:linear-gradient(145deg,#591a20,#2c1016);box-shadow:inset 0 0 0 1px #bc8b4266}
+.mobile-nav>button.active .icon{filter:drop-shadow(0 1px 2px #0008)}
+@media(min-width:1700px){.command-masthead{min-height:156px;padding-inline:34px}.command-masthead h1{font-size:35px}.command-masthead p{font-size:12px}.command-masthead .eyebrow{font-size:9px;letter-spacing:2px}.command-masthead .view-switch button{font-size:12px;padding-inline:19px}.brand img{width:50px;height:48px}}
+@media(max-width:1280px){.brand{gap:9px;padding-inline:5px}.brand img{width:42px;height:40px}.brand small{font-size:8px}.command-masthead{min-height:144px;padding-inline:23px}.command-masthead .view-switch button{padding-inline:12px;font-size:10px}.command-masthead .eyebrow{font-size:7px;letter-spacing:1.3px}.command-masthead .eyebrow>.icon{width:20px;height:20px}.command-masthead p{font-size:10px}.hero{padding-inline:23px}.metric{padding-block:18px 15px}}
+@media(max-width:1100px) and (min-width:961px){.brand img{width:38px;height:37px}.brand strong{font-size:19px}.brand strong span{font-size:11px}.command-masthead{padding-inline:20px}.command-masthead h1{font-size:28px}.command-masthead .eyebrow{letter-spacing:.8px;font-size:7px;gap:6px}.command-masthead .view-switch{padding:3px}.command-masthead .view-switch button{font-size:10px;padding-inline:9px;gap:7px}.hero{padding-inline:18px}.hero-progress{width:125px}.ring-wrap{width:126px;height:126px}.metric-icon{width:28px;height:28px}.metric-icon .icon{width:17px;height:17px}}
+@media(max-width:960px){.topbar{height:59px}.sidebar{padding-top:25px}.brand img{width:47px;height:44px}.command-masthead{min-height:149px;padding:24px 25px;background-position:center 57%}.command-masthead h1{font-size:31px}.command-masthead .eyebrow{font-size:8px;letter-spacing:1.3px}.command-masthead .view-switch button{font-size:11px;padding-inline:14px}.sidebar.open{box-shadow:-12px 0 45px #000a}.nav-scrim:not([hidden]){background:#050608b8}.metric{padding-block:17px 15px}}
+@media(max-width:800px){.command-masthead{padding-inline:22px;gap:15px}.command-masthead .view-switch button{font-size:10px;padding-inline:11px}.command-masthead .eyebrow{font-size:7px;letter-spacing:.9px;gap:7px}.command-masthead p{font-size:10px}.command-masthead h1{font-size:30px}.hero{padding-inline:21px}}
+@media(max-width:650px){
+ .topbar{height:57px}
+ .topbar .preview-label{font-size:8px}
+ .main{padding-top:17px}
+ .command-masthead{padding:21px 20px 20px;min-height:154px;margin-bottom:17px;align-items:center;gap:12px;background:linear-gradient(270deg,#06090bef 0%,#080b0bca 38%,#09090c45 100%),url('/assets/chico-city-gold.webp') 55% 54% / auto 225px}
+ .command-masthead h1{font-size:30px;line-height:1.65}
+ .command-masthead .eyebrow{font-size:7px;letter-spacing:1px;gap:8px;flex-wrap:nowrap}
+ .command-masthead .eyebrow>.icon{width:21px;height:21px}
+ .command-masthead .eyebrow b{margin:0 2px}
+ .command-masthead p{font-size:10px;max-width:250px;line-height:1.9}
+ .command-masthead>.badge{font-size:8px;max-width:95px;white-space:normal;align-self:flex-end;flex-shrink:0;text-align:center;line-height:1.8}
+ .masthead-flare{left:8%;width:145px}
+ .masthead-angles{opacity:.9;background:linear-gradient(135deg,transparent 5%,#d8ad5e5c 5.2%,transparent 5.5%),linear-gradient(135deg,transparent 8%,#d8ad5e33 8.2%,transparent 8.5%)}
+ .hero{padding:23px 21px 0;min-height:272px}
+ .hero-progress{width:133px}
+ .hero .ring-wrap{width:143px;height:143px}
+ .hero .ring-label strong{font-size:39px}
+ .hero .ring-label small{font-size:9px}
+ .hero h2{font-size:24px}
+ .hero-footer{margin-top:20px;font-size:10px}
+ .shift-highlight{padding:19px 20px 13px}
+ .shift-highlight:before,.shift-highlight:after{width:19px;height:1px}
+ [data-theme=dark] .shift-highlight{background:linear-gradient(270deg,#11100ee8,#11100ed9),url('/assets/chico-city-gold.webp') center 55% / cover}
+ .shift-time{font-size:28px}
+ .shift-days{gap:4px}
+ .shift-days>span{border-radius:2px;padding-block:6px}
+ .shift-link{padding-top:12px;font-size:10px}
+ .metric{padding:16px 16px 14px;min-height:148px}
+ .metric-icon{width:27px;height:27px}
+ .metric-icon .icon{width:17px;height:17px}
+ .metric-value>span{font-size:31px}
+ .metric-top{font-size:11px}
+ .metric-value>small{font-size:9px}
+ .metric-note{font-size:9px}
+ .section-heading h2{font-size:16px}
+ .section-heading .eyebrow{font-size:9px}
+ .bar{border-radius:1px 1px 0 0}
+ .bar-day{font-size:8px}
+ .decision-copy strong{font-size:11px}
+ .decision-copy small{font-size:10px}
+ .decision-row>.badge{font-size:8px}
+ .decision-icon{width:33px;height:34px}
+ .meeting-strip{padding:18px 19px}
+ .meeting-strip h3{font-size:12px}
+ .meeting-icon{width:35px;height:35px}
+ .meeting-strip p{font-size:9px}
+ .panel-bottom{padding-inline:20px;font-size:9px}
+ .mobile-nav{padding-top:8px}
+ .mobile-nav>button{font-size:9px;min-height:46px}
+ .detail-dialog,.detail-dialog.wide-dialog{border-radius:5px;max-height:89dvh}
+ .dialog-header h2{font-size:18px}
+ .dialog-header{padding:20px}
+ .dialog-body{padding-inline:20px}
+ .page-footer{padding-bottom:101px}
+}
+@media(max-width:375px){
+ .command-masthead{padding:20px 17px;min-height:148px}
+ .command-masthead h1{font-size:28px}
+ .command-masthead .eyebrow{font-size:6.5px;letter-spacing:.7px;gap:5px}
+ .command-masthead .eyebrow>.icon{width:19px;height:19px}
+ .command-masthead p{font-size:9px}
+ .command-masthead>.badge{font-size:7px;max-width:76px}
+ .hero{padding-inline:17px;gap:9px;min-height:267px}
+ .hero h2{font-size:22px}
+ .hero-progress{width:117px}
+ .hero .ring-wrap{width:127px;height:127px}
+ .hero .ring-label strong{font-size:35px}
+ .hero .ring-label small{font-size:8px}
+ .hero-footer{font-size:9px}
+ .metric{padding-inline:13px}
+ .metric-top{font-size:10px;gap:4px}
+ .metric-value{gap:5px}
+ .metric-value>small{font-size:8px}
+ .metric-note{font-size:8px}
+ .section-heading h2{font-size:14px}
+ .bar-day{font-size:7px}
+ .decision-copy small{font-size:9px}
+ .shift-time{font-size:26px}
+}
