@@ -1,0 +1,2 @@
+import {Shield,RefreshCw} from 'lucide-react';
+export default function ServiceUnavailable(){return <main className="auth-page" id="main"><div className="auth-city" aria-hidden="true"/><section className="auth-card pending-card"><div className="auth-card-kicker">Chico Admins · اتصال الخدمة</div><Shield size={34}/><h1>الخدمة غير متاحة مؤقتًا</h1><p>تعذر الوصول إلى خدمة الحسابات. جلستك محفوظة، ويمكنك إعادة المحاولة بعد عودة الاتصال.</p><a className="button gold" href="/app"><RefreshCw size={18}/> إعادة المحاولة</a></section></main>;}
