@@ -1,32 +1,65 @@
 'use client';
-import {ArrowLeft,CalendarDays,ChartNoAxesColumn,ClipboardCheck,Clock3,Crown,Flag,Grid2X2,Leaf,MessageSquare,Shield,ShieldCheck,Star,Users} from 'lucide-react';
-import type {LucideIcon} from 'lucide-react';
-import type {Snapshot,Rank} from '@/lib/domain/types';
-import {displayNumber,percentage,RANK_LABELS} from '@/lib/domain/rules';
-import {memberFlags,memberState,performanceFor,effectiveGoals,flagsText,STATUS_LABELS} from '@/lib/domain/view';
+import {ArrowLeft,ArrowUpLeft,CalendarDays,ChartNoAxesColumn,ClipboardCheck,Clock3,Flag,Leaf,Plus,Shield,Star,Ticket,Trophy} from 'lucide-react';
+import type {Snapshot} from '@/lib/domain/types';
+import {canPublish,percentage,RANK_LABELS} from '@/lib/domain/rules';
+import {flagsText,memberState,performanceFor,effectiveGoals,STATUS_LABELS} from '@/lib/domain/view';
 import Leaderboard,{Avatar} from './leaderboard';
 import {Badge,DateText,Empty,Meter,localDateTime} from '../ui';
+import type {ViewProps} from './view-types';
 
-import type {Section,ViewProps} from './view-types';
-function icon(Icon:LucideIcon){return <Icon className="icon"/>;}
-export default function PersonalView({preview,data,member,account,archived,busy,open,navigate,metric,sectionHead,summary,rankFilter,setRankFilter,nameOf,approve}:ViewProps){
-        const perf = performanceFor(data, member.id);
-        const goal = effectiveGoals(data, member, perf);
-        const flags = memberFlags(data, member.id);
-        const state = memberState(data, member);
-        const pct = percentage(perf?.tickets, goal?.tickets);
-        const nextShift = data.shifts.filter(s => +new Date(s.ends_at) > Date.now() && (s.staff_id === member.id || s.substitute_id === member.id)).sort((a, b) => +new Date(a.starts_at) - +new Date(b.starts_at))[0];
-        const meeting = data.meetings.filter(m => +new Date(m.starts_at) > Date.now()).sort((a, b) => +new Date(a.starts_at) - +new Date(b.starts_at))[0];
-        const confirmed = data.confirmations.some(c => c.staff_id === member.id && c.confirmed&&c.target_snapshot===goal?.requests);
-        const daily = data.snapshots.filter(r => r.staff_id === member.id && r.status === 'published' && r.report_type === 'daily').sort((a, b) => +new Date(a.measured_at) - +new Date(b.measured_at));
-        const dayRows = new Map<string, Snapshot>();
-        daily.forEach(r => dayRows.set(localDateTime(r.measured_at).slice(0, 10), r));
-        const bars = [...dayRows.values()];
-        const max = Math.max(1, ...bars.map(b => b.tickets));
-        return <><div className="personal-lead-grid"><section className="card hero"><div className="hero-lines" aria-hidden="true"><div /><div /><div /></div><div className="hero-copy"><Avatar member={member} period={data.period} preview={preview} size={62}/><div className="hero-eyebrow"><span dir="ltr">{RANK_LABELS[member.rank]}</span><span className="inline-role">{account.owner ? 'مالك الموقع' : 'مساحة العضو'}</span><Badge kind={state.kind}>{state.text}</Badge></div><span className="welcome-label">أهلًا،</span><h2>{member.display_name}</h2><p>{goal ? (perf ? 'تابع أداءك ونقاطك لهذا الأسبوع' : 'أداءك يظهر بعد اعتماد الإحصائيات') : 'تابع الطلبات وأداء الفريق'}</p><div className="hero-footer">{icon(Shield)}<span>{flagsText(data, member)} فلاجات تراكمية · محفوظة في التاريخ</span></div></div><div className="hero-progress">{goal ? <><div className="ring-wrap"><svg viewBox="0 0 160 160" className="progress-ring" aria-hidden="true"><defs><linearGradient id="ticketGold"><stop offset="0" stopColor="#895b22"/><stop offset=".45" stopColor="#ffe7a4"/><stop offset="1" stopColor="#d6a654"/></linearGradient></defs><circle className="ring-track" cx="80" cy="80" r="69"/><circle className="ring-value" cx="80" cy="80" r="69" strokeDasharray="433.54" strokeDashoffset={433.54 * (1 - Math.min(100, pct ?? 0) / 100)}/></svg><div className="ring-label"><strong dir="ltr">{pct ?? '—'}<span>{pct == null ? '' : '%'}</span></strong><small>{pct == null ? 'لم تُضف بيانات' : 'إنجاز هدف التذاكر'}</small></div></div><div className="ring-caption"><b dir="ltr">{displayNumber(perf?.tickets)} <span>/ {goal.tickets}</span></b><span>تذكرة خلال الأسبوع</span></div></> : <span className="leadership-emblem">{icon(Crown)}</span>}</div></section>
-   <section className="shift-highlight"><div className="shift-stamp" dir="ltr">NEXT SHIFT</div><div className="shift-top">{icon(Clock3)}<strong>مناوبتك القادمة</strong></div>{nextShift ? <><div className="shift-date"><DateText value={nextShift.starts_at} time={false}/></div><div className="shift-time" dir="ltr">{new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Riyadh' }).format(new Date(nextShift.starts_at))}<span> — </span>{new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Riyadh' }).format(new Date(nextShift.ends_at))}</div><p>بتوقيت السعودية · {nextShift.substitute_id === member.id ? 'تغطية بديل' : 'مناوبتك المسجلة'}</p><Badge kind={nextShift.coverage === 'needs_substitute' ? 'warning' : 'gold'}>{STATUS_LABELS[nextShift.coverage]}</Badge></> : <><div className="shift-date">لم تُسجل مناوبة قادمة بعد.</div><div className="shift-time">—</div><p>سيظهر موعدك بعد إضافته في جدول الفريق.</p></>}<button className="shift-link" onClick={() => navigate('shifts')}>عرض جدول المناوبات {icon(ArrowLeft)}</button></section></div>
-   <section className="card personal-points"><div><span className="eyebrow">نقاط الأسبوع</span><strong>{data.points?.total??'—'}</strong><small>{data.points?.base==null?'تظهر بعد اعتماد الأداء':'من الأداء المعتمد'}</small></div><img src="/assets/ranks/moderator.svg" width="90" height="90" alt="نقاط الأداء"/></section><div className="leaderboard-grid"><Leaderboard data={data} group="helpers" compact preview={preview}/><Leaderboard data={data} group="moderators" compact preview={preview}/></div><div className="metrics-grid">{metric('الساعات الأسبوعية', displayNumber(perf?.hours), goal ? 'من ' + goal.hours + ' ساعة' : 'لا ينطبق هدف أداء', Clock3, perf && goal && perf.hours >= goal.hours ? 'success' : 'gold')}{metric('تقييم الجودة', perf ? perf.rating.toFixed(2) : '—', goal ? 'الحد الأدنى ' + goal.rating.toFixed(2) : 'لا ينطبق هدف أداء', Star, !perf||!goal?'neutral':perf.rating < goal.rating ? 'warning' : 'success')}{metric('الشكاوى المحلولة', displayNumber(perf?.complaints), goal?.complaints ? 'من ' + goal.complaints + ' شكوى' : 'حسب التكليف المسجل', MessageSquare)}{metric('الفلاجات حتى الآن', flagsText(data,member), '7–9 متابعة · 10+ مسار تدريب', Flag, state.kind, () => navigate('discipline'))}</div>
-   <div className="personal-bottom-grid"><section className="card activity-panel">{sectionHead('نشاطك خلال الأسبوع', 'نظرة أقرب')}<div className="system-bars">{bars.length ? bars.map(r => <div className="system-bar-slot" key={r.id}><span dir="ltr">{r.tickets}</span><div className="bar" style={{ height: Math.max(3, r.tickets / max * 120) + 'px' }}/><small><DateText value={r.measured_at} time={false}/></small></div>) : <Empty text="لا توجد لقطات يومية منشورة."/>}</div><div className="panel-bottom"><span>{bars.some(r => r.ticket_mode === 'daily_count') ? 'التذاكر أعداد يومية؛ الساعات إجمالي الأسبوع.' : 'التذاكر المعروضة لقطات إجمالي الأسبوع حتى وقت التقرير.'}</span><button className="text-button" onClick={() => navigate('reports')}>سجل الإحصائيات {icon(ArrowLeft)}</button></div></section>
-    <section className="card tasks-panel">{sectionHead('المهام والأرصدة', 'ما تحتاج متابعته')}<div className="system-task"><span className="task-icon">{icon(ClipboardCheck)}</span><div><strong>{goal?.requests ? 'هدف الأسبوع · '+goal.requests+' طلبًا' : goal?.messages ? 'مهمة الرسائل الإضافية' : 'مهام حسب تكليفك'}</strong><small>{goal?.requests ? 'تأكيد إكمال هدف الأسبوع' : goal?.messages ? 'الهدف المسجل: '+goal.messages+' رسالة خلال الأسبوع.' : 'تظهر التكليفات المؤكدة في سجل الفريق.'}</small></div>{goal?.requests ? <button className="button outline small" disabled={archived || busy||member.rank!=='moderator'} onClick={() => open('confirm_requests', confirmed ? 'التراجع عن الإقرار' : 'تأكيد إكمال طلبات الأسبوع', { confirmed: !confirmed,expected_target:goal.requests })}>{confirmed ? 'تم الإقرار' : 'تأكيد'}</button> : <Badge kind="gold">{displayNumber(perf?.messages)}</Badge>}</div><div className="system-balances"><div><span>رصيد الإجازات · الشهر الحالي</span><strong>{data.balances.leave_available ?? '—'}<small>{data.balances.leave_quota == null ? 'السياسة لم تُضبط' : ' من ' + data.balances.leave_quota + ' أيام'}</small></strong><small>{data.balances.leave_held} أيام في طلبات معلقة</small></div><div><span>رصيد التبريرات · الشهر الحالي</span><strong>{data.balances.excuse_available ?? '—'}<small>{data.balances.excuse_quota == null ? 'السياسة لم تُضبط' : ' من ' + data.balances.excuse_quota}</small></strong><small>يتجدد الرصيد كل شهر تقويمي</small></div></div><button className="text-button" onClick={() => navigate('requests')}>سجل الإجازات والتبريرات {icon(ArrowLeft)}</button></section></div>
-   <section className="meeting-strip"><span className="meeting-icon">{icon(CalendarDays)}</span><div><h3>اجتماع الفريق الأسبوعي</h3><p>{meeting ? <DateText value={meeting.starts_at}/> : <>كل اثنين 10 مساءً بتوقيت السعودية · لم يحدد موعد السجل القادم</>}</p></div><Badge kind="gold">الحضور مطلوب حتى للمجاز</Badge><button className="text-button" onClick={() => navigate('meetings')}>التفاصيل {icon(ArrowLeft)}</button></section></>;
-    }
+export default function PersonalView({preview,data,member,account,archived,busy,open,navigate,metric,sectionHead}:ViewProps){
+ const perf=performanceFor(data,member.id),goal=effectiveGoals(data,member,perf);
+ const flags=flagsText(data,member),state=memberState(data,member),pct=percentage(perf?.tickets,goal?.tickets);
+ const nextShift=data.shifts.filter(s=>+new Date(s.ends_at)>Date.now()&&(s.staff_id===member.id||s.substitute_id===member.id)).sort((a,b)=>+new Date(a.starts_at)-+new Date(b.starts_at))[0];
+ const meeting=data.meetings.filter(m=>+new Date(m.starts_at)>Date.now()).sort((a,b)=>+new Date(a.starts_at)-+new Date(b.starts_at))[0];
+ const confirmed=data.confirmations.some(c=>c.staff_id===member.id&&c.confirmed&&c.target_snapshot===goal?.requests);
+ const daily=data.snapshots.filter(r=>r.staff_id===member.id&&r.status==='published'&&r.report_type==='daily').sort((a,b)=>+new Date(a.measured_at)-+new Date(b.measured_at));
+ const dayRows=new Map<string,Snapshot>();daily.forEach(r=>dayRows.set(localDateTime(r.measured_at).slice(0,10),r));
+ const bars=[...dayRows.values()],max=Math.max(1,...bars.map(b=>b.tickets));
+ const time=(value:string)=>new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Riyadh'}).format(new Date(value));
+ return <>
+  <div className="overview-grid">
+   <section className="welcome-card">
+    <div className="welcome-art" aria-hidden="true"><span className="welcome-orbit"/><img src="/assets/onestate-characters.webp" alt="" width="735" height="496"/></div>
+    <div className="welcome-content">
+     <div className="welcome-identity"><Avatar member={member} period={data.period} preview={preview} size={44}/><span className="rank-tag" dir="ltr">{RANK_LABELS[member.rank]}</span>{account.owner&&<span className="owner-tag" dir="ltr">Owner</span>}</div>
+     <p className="welcome-greeting">أهلًا بعودتك،</p><h2 dir="auto">{member.display_name}<span className="coral-dot">.</span></h2>
+     <p className="welcome-description">{goal?(perf?'هذا ملخص أدائك للأسبوع. خلّك على المسار.':'جاهز تبدأ؟ إحصائياتك تظهر بعد اعتماد أول Report.'):'تابع طلباتك، مواعيدك، وكل جديد.'}</p>
+     <div className="welcome-actions"><button className="button gold" onClick={()=>navigate('reports')}><ChartNoAxesColumn size={17}/> إحصائياتي <ArrowLeft size={17}/></button><button className="text-button" onClick={()=>navigate('history')}>My history <ArrowUpLeft size={17}/></button></div>
+    </div>
+    <div className="welcome-bottom"><span><Shield size={15}/> GENERAL TEAM</span><span>{goal?(perf?'تم تحديث أدائك':'بانتظار أول Report'):'كل تحديث في مكانه'}</span></div>
+   </section>
+   <div className="overview-side">
+    <section className="points-spotlight"><div className="points-spotlight-copy"><span className="eyebrow" dir="ltr">WEEKLY POINTS</span><div className="points-total"><strong>{data.points?.total==null?'—':Number(data.points.total).toLocaleString('en-US',{maximumFractionDigits:1})}</strong><span>نقطة</span></div><small>{data.points?.total==null?'تظهر بعد اعتماد الأداء':'نقاطك للأسبوع المختار'}</small></div><span className="points-orb"><Trophy size={32}/></span></section>
+    <section className="shift-card"><header><span><Clock3 size={18}/> Next shift</span><button className="icon-button" aria-label="فتح جدول Shifts" onClick={()=>navigate('shifts')}><ArrowUpLeft size={19}/></button></header>{nextShift?<><strong className="shift-clock" dir="ltr">{time(nextShift.starts_at)} <span>— {time(nextShift.ends_at)}</span></strong><p><DateText value={nextShift.starts_at} time={false}/> · السعودية</p><Badge kind={nextShift.coverage==='needs_substitute'?'warning':'success'}>{STATUS_LABELS[nextShift.coverage]}</Badge></>:<><strong className="shift-empty-title">جدولك هادي حاليًا</strong><p>ما عندك مناوبة قادمة.</p><button className="text-button" onClick={()=>navigate('shifts')}>عرض الجدول <ArrowLeft size={15}/></button></>}</section>
+   </div>
+  </div>
+  <div className="overview-section-label"><h2>أداؤك هذا الأسبوع</h2><span dir="ltr">YOUR PERFORMANCE</span></div>
+  <div className="metrics-grid metrics-strip personal-metrics">
+   {metric('Tickets',perf?.tickets??'—',goal?'الهدف '+goal.tickets+' تذكرة':'حسب تكليفك',Ticket,pct!=null&&pct>=100?'success':'blue',()=>navigate('reports'))}
+   {metric('Hours',perf?.hours??'—',goal?'الهدف '+goal.hours+' ساعة':'حسب تكليفك',Clock3,perf&&goal&&perf.hours>=goal.hours?'success':'blue')}
+   {metric('Rating',perf?perf.rating.toFixed(2):'—',goal?'المطلوب '+goal.rating.toFixed(2)+' / 5':'تقييم الجودة',Star,perf&&goal?(perf.rating<goal.rating?'warning':'success'):'gold')}
+   {metric('Flags',flags==='لم تُراجع'?'—':flags,flags==='لم تُراجع'?'Flags لم تُراجع بعد':state.text,Flag,state.kind,()=>navigate('discipline'))}
+  </div>
+  <div className="quick-actions" aria-label="إجراءات سريعة">
+   {canPublish(account)&&<button disabled={archived||busy} onClick={()=>open('report','Report جديد')}><span className="quick-icon blue"><Plus size={20}/></span><span><strong>Report جديد</strong><small>أضف إحصائياتك</small></span><ArrowUpLeft size={19}/></button>}
+   <button disabled={member.game_status==='dismissed'} onClick={()=>open('request_create','طلب جديد')}><span className="quick-icon coral"><Leaf size={20}/></span><span><strong>طلب إجازة أو تبرير</strong><small>أرفق رسالة Discord</small></span><ArrowUpLeft size={19}/></button>
+   <button onClick={()=>navigate('profile')}><span className="quick-icon violet"><Shield size={20}/></span><span><strong>My profile</strong><small>صورتك وإعدادات حسابك</small></span><ArrowUpLeft size={19}/></button>
+  </div>
+  <div className="personal-bottom-grid">
+   <section className="card activity-panel">{sectionHead('نشاطك الأسبوعي','ACTIVITY',<button className="text-button" onClick={()=>navigate('reports')}>كل Reports <ArrowLeft size={16}/></button>)}
+    {goal&&<div className="activity-target"><div><span>هدف Tickets</span><strong dir="ltr">{perf?.tickets??'—'} <small>/ {goal.tickets}</small></strong></div><Meter value={perf?.tickets??null} target={goal.tickets}/><small>{pct==null?'الهدف جاهز، بانتظار بياناتك.':pct+'% من هدف الأسبوع'}</small></div>}
+    <div className="system-bars">{bars.length?bars.map(r=><div className="system-bar-slot" key={r.id}><span dir="ltr">{r.tickets}</span><div className="bar" style={{height:Math.max(3,r.tickets/max*120)+'px'}}/><small><DateText value={r.measured_at} time={false}/></small></div>):<Empty text="أول Report يصنع البداية" detail="بعد اعتماد إحصائياتك، تقدر تتابع نشاطك هنا."/>}</div>
+    {bars.length>0&&<div className="panel-bottom"><span>{bars.some(r=>r.ticket_mode==='daily_count')?'Tickets يومية حسب Reports المسجلة.':'إجمالي Tickets للأسبوع وقت كل Report.'}</span></div>}
+   </section>
+   <section className="card tasks-panel">{sectionHead('رصيدك ومهامك','MY PLANNER')}
+    <div className="system-balances"><div><span><Leaf size={17}/> إجازات الشهر</span><strong>{data.balances.leave_available??'—'}<small> / {data.balances.leave_quota??'—'} أيام</small></strong><small>{data.balances.leave_held?data.balances.leave_held+' أيام بانتظار الموافقة':'الخصم بعد الموافقة'}</small></div><div><span><ClipboardCheck size={17}/> التبريرات</span><strong>{data.balances.excuse_available??'—'}<small> / {data.balances.excuse_quota??'—'}</small></strong><small>تتجدد أول كل شهر</small></div></div>
+    <div className="system-task"><span className="task-icon"><ClipboardCheck size={21}/></span><div><strong>{goal?.requests?'هدفك '+goal.requests+' طلب':goal?.messages?'هدفك '+goal.messages+' رسالة':'مهام الفريق'}</strong><small>{goal?.requests?'أكد إكمال طلبات الأسبوع.':goal?.messages?'متابعة رسائل SN.Helper.':'حسب تكليف Owner أو Responsible.'}</small></div>{goal?.requests?<button className="button outline small" disabled={archived||busy||member.rank!=='moderator'} onClick={()=>open('confirm_requests',confirmed?'إلغاء التأكيد':'تأكيد إكمال الطلبات',{confirmed:!confirmed,expected_target:goal.requests})}>{confirmed?'مكتمل':'تأكيد'}</button>:null}</div>
+    <button className="planner-link text-button" onClick={()=>navigate('requests')}>متابعة طلباتي <ArrowLeft size={16}/></button>
+   </section>
+  </div>
+  <div className="overview-section-label"><h2>صدارة الفريق</h2><span dir="ltr">TEAM LEADERBOARD</span></div>
+  <div className="leaderboard-grid"><Leaderboard data={data} group="helpers" compact preview={preview} onOpen={()=>navigate('helpers')}/><Leaderboard data={data} group="moderators" compact preview={preview} onOpen={()=>navigate('moderators')}/></div>
+  <section className="meeting-strip"><span className="meeting-icon"><CalendarDays size={22}/></span><div><h3>Team meeting</h3><p>{meeting?<DateText value={meeting.starts_at}/>:<>الاثنين 10 مساءً · السعودية. بانتظار تسجيل الموعد.</>}</p></div><button className="text-button" onClick={()=>navigate('meetings')}>التفاصيل <ArrowLeft size={16}/></button></section>
+ </>;
+}

@@ -61,6 +61,3 @@ next-env.d.ts
 *.tsbuildinfo
 /qa-output/
 /.owner-provision.json
-
-/.sites-runtime/
-/supabase/.temp/

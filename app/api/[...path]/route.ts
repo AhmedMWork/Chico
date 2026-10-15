@@ -17,7 +17,7 @@ async function dispatch(request:Request){
  const url=new URL(request.url);const path=url.pathname.replace(/^\/api\//,'');
  try{
   if(request.method==='GET'){
-   if(path==='status')return response({configured:isConfigured(),version:'1.3.0'});
+   if(path==='status')return response({configured:isConfigured(),version:'1.4.1'});
    const session=await getSession(!['me','notifications'].includes(path));
    if(path==='me')return response({account:session.account});
    if(path==='dashboard'){
