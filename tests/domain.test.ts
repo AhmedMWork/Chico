@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {canPublish,hasCapability,weekDate,saudiDateTime,latestPerformance,goals} from '../lib/domain/rules';
 import {csvCell,parseCsv,rowsFromMatrix,suggestMember,parseImportFile} from '../lib/domain/imports';
-import {previewData} from '../lib/domain/preview';
+import {previewData} from './fixtures/dashboard';
 import {memberState,effectiveGoals} from '../lib/domain/view';
 import {config,AppError} from '../lib/db/supabase';
 import {hash,encrypt,decrypt,randomToken,equalSecret} from '../lib/auth/crypto';

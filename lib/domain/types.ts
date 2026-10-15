@@ -23,7 +23,7 @@ export interface Shift {id:string;staff_id:string;starts_at:string;ends_at:strin
 export interface TeamRequest {policy_snapshot?:{version:number;rank:Rank;balance:Balance}|null;id:string;staff_id:string;type:'leave'|'excuse';starts_at:string;ends_at:string;notice_at:string;units:number;reason:string;source:string;substitute_id:string|null;substitute_accepted:boolean;discord_url?:string|null;status:'pending'|'approved'|'rejected'|'cancelled';decision_reason:string|null;created_at:string;}
 export interface Meeting {id:string;starts_at:string;title:string;channel_url:string;}
 export interface Attendance {meeting_id:string;staff_id:string;status:'present'|'late'|'absent'|'excused';note:string;}
-export interface Notification {id:string;title:string;body:string;link:string;read_at:string|null;created_at:string;}
+export interface Notification {kind?:'info'|'success'|'warning'|'danger';audience?:'self'|'management';id:string;title:string;body:string;link:string;read_at:string|null;created_at:string;}
 export interface AccountRow {allowed_actions?:string[];user_id:string;member_id?:string;username?:string;display_name?:string;rank?:Rank;status:AccountStatus;created_at:string;}
 export interface Balance {month:string;leave_quota:number|null;leave_used:number;leave_held:number;leave_available:number|null;excuse_quota:number|null;excuse_used:number;excuse_held:number;excuse_available:number|null;}
 export interface GoalSet {tickets:number;hours:number;rating:number;complaints:number|null;requests:number|null;messages:number|null;}
@@ -34,7 +34,7 @@ export interface LeaderboardEntry{staff_id:string;display_name:string;rank:Rank;
 export interface PointConfig{max_points:number;tickets:number;hours:number;rating:number;tasks:number;}
 export interface DataBundle {
  points?:PointScore;leaderboard?:{helpers:LeaderboardEntry[];moderators:LeaderboardEntry[]};points_config?:PointConfig|null;member_scores?:Array<{staff_id:string;score:PointScore}>;point_adjustments?:Array<{id:string;staff_id:string;period_start:string;amount:number;reason:string;status:'active'|'voided';created_at:string}>;
-  fetched_at?:string;review_tasks?:Array<{id:string;staff_id:string;kind:string;source_ids:string[];status:string;created_at:string}>;
+  unread_notifications?:number;notifications_can_manage?:boolean;fetched_at?:string;review_tasks?:Array<{id:string;staff_id:string;kind:string;source_ids:string[];status:string;created_at:string}>;
   account: Account; period: string; members: Member[]; snapshots: Snapshot[];
   flags:FlagEvent[];discipline:DisciplineEvent[];training:TrainingCase[];
   shifts:Shift[];requests:TeamRequest[];meetings:Meeting[];attendance:Attendance[];

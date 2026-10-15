@@ -1,12 +1,12 @@
 export class AppError extends Error { constructor(public status:number, message:string, public code='APP_ERROR'){super(message);} }
-export interface RuntimeConfig {url:string;publishable:string;secret:string;encryption:string;rateKey:string;origin:string;bootstrap:string;}
+export interface RuntimeConfig {url:string;publishable:string;secret:string;encryption:string;rateKey:string;origin:string;}
 export function config():RuntimeConfig {
  const url=process.env.SUPABASE_URL?.replace(/\/$/,'')??'';
  const publishable=process.env.SUPABASE_PUBLISHABLE_KEY??'';const secret=process.env.SUPABASE_SECRET_KEY??'';
  const encryption=process.env.SESSION_ENCRYPTION_KEY??'';const rateKey=process.env.RATE_LIMIT_HMAC_KEY??'';
  if(!url||!publishable||!secret||!/^[A-Za-z0-9_-]{43}$/.test(encryption)||Buffer.from(encryption,'base64url').length!==32||rateKey.length<32)throw new AppError(503,'لم يكتمل ربط قاعدة البيانات بعد. راجع إعدادات التشغيل.','NOT_CONFIGURED');
  const parsed=new URL(url);if(parsed.protocol!=='https:'&&!['localhost','127.0.0.1'].includes(parsed.hostname))throw new AppError(503,'إعداد قاعدة البيانات غير صالح');
- return {url,publishable,secret,encryption,rateKey,origin:process.env.APP_ORIGIN??'',bootstrap:process.env.CHICO_BOOTSTRAP_TOKEN??''};
+ return {url,publishable,secret,encryption,rateKey,origin:process.env.APP_ORIGIN??''};
 }
 export function isConfigured():boolean {try{config();return true;}catch{return false;}}
 export async function supabase<T>(path:string,{method='POST',body,token,service=false}:{method?:string;body?:unknown;token?:string;service?:boolean}={}):Promise<T>{

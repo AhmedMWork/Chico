@@ -109,7 +109,7 @@ button,input,select {font-variant-numeric:tabular-nums}
   overflow:hidden;
   border:1px solid #b18b47;
   border-radius:2px;
-  background:linear-gradient(270deg,#07090bf5 0%,#080a0bd9 28%,#0a0a0b36 61%,#090a0d86 100%),url('/assets/chico-city-gold.webp') center 57% / cover;
+  background:linear-gradient(270deg,#07090bf5 0%,#080a0bd9 28%,#0a0a0b36 61%,#090a0d86 100%),url('/assets/onestate-characters.webp') center 57% / cover;
   box-shadow:inset 0 0 0 4px #0a0b0e70,inset 0 0 0 5px #ddb05c2b,0 5px 26px #0004;
   clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,18px 100%,0 calc(100% - 18px));
 }
@@ -204,7 +204,7 @@ button,input,select {font-variant-numeric:tabular-nums}
 .card:hover{border-color:var(--frame-bright)}
 .hero {
   border-color:#c59a4e;
-  background:linear-gradient(270deg,#090c0ef7 0%,#090c0eeb 40%,#080b0dbb 100%),url('/assets/chico-city-gold.webp') center 60% / cover;
+  background:linear-gradient(270deg,#090c0ef7 0%,#090c0eeb 40%,#080b0dbb 100%),url('/assets/onestate-characters.webp') center 60% / cover;
   box-shadow:inset 0 1px 0 #fbe4ae38,inset 0 -18px 32px #0005;
 }
 .hero h2{color:#f3e4c7;text-shadow:0 1px 3px #0007;font-weight:700}
@@ -247,7 +247,7 @@ button,input,select {font-variant-numeric:tabular-nums}
   border:1px solid var(--frame);
 }
 [data-theme=dark] .shift-highlight {
-  background:linear-gradient(270deg,#10100ee8,#100e0dcc),url('/assets/chico-city-gold.webp') 30% 55% / cover;
+  background:linear-gradient(270deg,#10100ee8,#100e0dcc),url('/assets/onestate-characters.webp') 30% 55% / cover;
   color:#e5c78b;
   box-shadow:inset 0 0 0 4px #080a0c38,inset 0 0 0 5px #d6b16b16;
 }
@@ -418,7 +418,7 @@ button,input,select {font-variant-numeric:tabular-nums}
  .topbar{height:57px}
  .topbar .preview-label{font-size:8px}
  .main{padding-top:17px}
- .command-masthead{padding:21px 20px 20px;min-height:154px;margin-bottom:17px;align-items:center;gap:12px;background:linear-gradient(270deg,#06090bef 0%,#080b0bca 38%,#09090c45 100%),url('/assets/chico-city-gold.webp') 55% 54% / auto 225px}
+ .command-masthead{padding:21px 20px 20px;min-height:154px;margin-bottom:17px;align-items:center;gap:12px;background:linear-gradient(270deg,#06090bef 0%,#080b0bca 38%,#09090c45 100%),url('/assets/onestate-characters.webp') 55% 54% / auto 225px}
  .command-masthead h1{font-size:30px;line-height:1.65}
  .command-masthead .eyebrow{font-size:7px;letter-spacing:1px;gap:8px;flex-wrap:nowrap}
  .command-masthead .eyebrow>.icon{width:21px;height:21px}
@@ -436,7 +436,7 @@ button,input,select {font-variant-numeric:tabular-nums}
  .hero-footer{margin-top:20px;font-size:10px}
  .shift-highlight{padding:19px 20px 13px}
  .shift-highlight:before,.shift-highlight:after{width:19px;height:1px}
- [data-theme=dark] .shift-highlight{background:linear-gradient(270deg,#11100ee8,#11100ed9),url('/assets/chico-city-gold.webp') center 55% / cover}
+ [data-theme=dark] .shift-highlight{background:linear-gradient(270deg,#11100ee8,#11100ed9),url('/assets/onestate-characters.webp') center 55% / cover}
  .shift-time{font-size:28px}
  .shift-days{gap:4px}
  .shift-days>span{border-radius:2px;padding-block:6px}

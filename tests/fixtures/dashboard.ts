@@ -1,6 +1,6 @@
-import type {DataBundle,Member,Snapshot} from './types';
-import {goals,weekDate} from './rules';
-// Fictional review data. This module is never imported by authenticated production routes.
+import type {DataBundle,Member,Snapshot} from '../../lib/domain/types';
+import {goals,weekDate} from '../../lib/domain/rules';
+// Synthetic test fixture only. Never import this module from application source.
 export function previewData():DataBundle{
  const period=weekDate();const now=Date.now();const iso=(offset:number)=>new Date(now+offset*3600000).toISOString();
  const members:Member[]=[

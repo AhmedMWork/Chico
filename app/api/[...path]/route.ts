@@ -17,8 +17,8 @@ async function dispatch(request:Request){
  const url=new URL(request.url);const path=url.pathname.replace(/^\/api\//,'');
  try{
   if(request.method==='GET'){
-   if(path==='status')return response({configured:isConfigured(),version:'1.2.0'});
-   const session=await getSession(path!=='me');
+   if(path==='status')return response({configured:isConfigured(),version:'1.3.0'});
+   const session=await getSession(!['me','notifications'].includes(path));
    if(path==='me')return response({account:session.account});
    if(path==='dashboard'){
     const period=url.searchParams.get('period')??weekDate();
@@ -29,10 +29,12 @@ async function dispatch(request:Request){
    if(path==='history'){const staff=z.string().uuid().parse(url.searchParams.get('staff_id')??session.account.member?.id);const before=z.coerce.number().int().positive().max(Number.MAX_SAFE_INTEGER).parse(url.searchParams.get('before')??Number.MAX_SAFE_INTEGER);return response(await rpc('chico_member_history',{p_staff:staff,p_before:before},session.token));}
    if(path.startsWith('files/'))return response(await fileUrl(z.string().uuid().parse(path.slice(6)),session));
    if(path==='audit'){const before=z.coerce.number().int().positive().max(Number.MAX_SAFE_INTEGER).parse(url.searchParams.get('before')??Number.MAX_SAFE_INTEGER);return response(await rpc('chico_audit_page',{p_before:before},session.token));}
+   if(path==='notifications'){const before=url.searchParams.get('before'),id=url.searchParams.get('before_id');return response(await rpc('chico_notification_feed',{p_before:before?z.string().datetime({offset:true}).parse(before):null,p_before_id:id?z.string().uuid().parse(id):null},session.token));}
    if(path==='sessions')return response(await rpc('chico_my_sessions',{},session.token));
    throw new AppError(404,'الصفحة غير موجودة');
   }
   sameOrigin(request);
+  if(path==='bootstrap')throw new AppError(404,'الصفحة غير موجودة');
   if(path==='avatar')return response(await uploadAvatar(request,await getSession(true)),201);
   if(path==='files')return response(await uploadFile(request,await getSession(true)),201);
   const body=await readJson(request,600000);
@@ -62,13 +64,8 @@ async function dispatch(request:Request){
    await rateLimit(request,'recover');const digest=await hash(input.token);await recoverPassword(digest,input.password);
    return response({ok:true,message:'تغيرت كلمة المرور. سجل الدخول بالكلمة الجديدة.'});
   }
-  const session=await getSession(!['bootstrap','logout','password','verify'].includes(path));
+  const session=await getSession(!['logout','password','verify'].includes(path));
   if(path==='logout'){await endSession(session,body.all===true);return response({ok:true});}
-  if(path==='bootstrap'){
-   const input=z.object({code:z.string().min(20).max(200),display_name:z.string().trim().min(2).max(60),rank:rankSchema,joined_at:z.string().regex(/^\d{4}-\d{2}-\d{2}$/)}).parse(body);await rateLimit(request,'bootstrap');
-   if(!await equalSecret(input.code,config().bootstrap))throw new AppError(403,'رمز الإعداد غير صالح');
-   await rpc('chico_service_bootstrap',{p_user:session.userId,p_display:input.display_name,p_rank:input.rank,p_joined:input.joined_at},undefined,true);return response({ok:true});
-  }
   if(path==='verify'){
    const input=z.object({password:z.string().min(1).max(128)}).parse(body);
    await rateLimit(request,'verify',session.account.username);

@@ -4,7 +4,7 @@ import {deflateSync} from 'node:zlib';
 import {sanitizeAvatar} from '../lib/db/avatars';
 import {password,registerSchema,actionSchemas} from '../lib/validation/schemas';
 import {canManage,hasCapability,canPublish} from '../lib/domain/rules';
-import {previewData} from '../lib/domain/preview';
+import {previewData} from './fixtures/dashboard';
 function crc32(bytes:Uint8Array){let crc=0xffffffff;for(const byte of bytes){crc^=byte;for(let i=0;i<8;i++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}return (crc^0xffffffff)>>>0;}
 function chunk(type:string,body:Uint8Array){const b=Buffer.alloc(body.length+12);b.writeUInt32BE(body.length);b.write(type,4);b.set(body,8);b.writeUInt32BE(crc32(b.subarray(4,-4)),b.length-4);return b;}
 function png(width=1,extras:Buffer[]=[]){const header=Buffer.alloc(13);header.writeUInt32BE(width);header.writeUInt32BE(1,4);header[8]=8;header[9]=6;return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk('IHDR',header),...extras,chunk('IDAT',deflateSync(Buffer.from([0,220,180,110,255]))),chunk('IEND',Buffer.alloc(0))]);}

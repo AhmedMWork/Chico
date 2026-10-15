@@ -1,0 +1,41 @@
+name: Safari on macOS (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safari:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:vercel
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+      - name: Native Safari test
+        run: |
+          sudo safaridriver --enable
+          /usr/bin/safaridriver --port 4444 > /tmp/chico-safaridriver.log 2>&1 &
+          SAFARI_PID=$!
+          node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000 > /tmp/chico-next.log 2>&1 &
+          CHICO_SERVER_PID=$!
+          trap 'kill "$SAFARI_PID" "$CHICO_SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in {1..60}; do
+            if curl --silent --fail http://127.0.0.1:3000/preview > /dev/null && curl --silent --fail http://127.0.0.1:4444/status > /dev/null; then break; fi
+            sleep 1
+          done
+          node scripts/qa-safari.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: safari-result
+          path: qa-output/
+          if-no-files-found: warn

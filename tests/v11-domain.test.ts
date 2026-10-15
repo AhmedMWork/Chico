@@ -4,7 +4,7 @@ import {renderToStaticMarkup} from 'react-dom/server';
 import {numeric,rowsFromMatrix,parseImportFile} from '../lib/domain/imports';
 import {sanitizeSource} from '../lib/db/sanitize-source';
 import {effectiveGoals,teamSummary,flagsText} from '../lib/domain/view';
-import {previewData} from '../lib/domain/preview';
+import {previewData} from './fixtures/dashboard';
 import {validateReviewedRows} from '../lib/db/import-review';
 test('v1.1 locale numbers distinguish decimal comma, Arabic digits and ambiguous separators',()=>{
  for(const [raw,value] of [['12,5',12.5],['١٢٫٥',12.5],['۱٫۵',1.5],['1٬234',1234],['4.85',4.85]] as const)assert.equal(numeric(raw),value);

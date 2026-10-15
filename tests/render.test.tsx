@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {renderToStaticMarkup} from 'react-dom/server';
 import Dashboard from '../components/dashboard';
-import {previewData} from '../lib/domain/preview';
+import {previewData} from './fixtures/dashboard';
 test('Personal and team views render Arabic accessible markup and clearly label fictional review data',()=>{
  const data=previewData();for(const initialSection of ['personal','team'] as const){const html=renderToStaticMarkup(<Dashboard initial={data} preview initialSection={initialSection}/>);assert.ok(html.includes('معاينة'));assert.ok(html.includes('بيانات توضيحية'));assert.ok(html.includes('التنقل الرئيسي'));assert.ok(html.includes('aria-label'));assert.equal(html.includes('اختر لون'),false);}
  const personal=renderToStaticMarkup(<Dashboard initial={data} preview/>);assert.ok(personal.includes('متابعتي'));const team=renderToStaticMarkup(<Dashboard initial={data} preview initialSection="team"/>);assert.ok(team.includes('الإنجاز المسجل'));assert.ok(team.includes('اكتمال'));
